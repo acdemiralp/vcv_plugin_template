@@ -1,0 +1,16 @@
+{
+  "terminal.integrated.profiles.windows": 
+  {
+    "MSYS2 MINGW64 Terminal": 
+    {
+      "path": "C:/msys64/msys2_shell.cmd",
+      "args": 
+      [
+        "-defterm" ,
+        "-here"    ,
+        "-mingw64" ,
+        "-no-start"
+      ]
+    }
+  }
+}
