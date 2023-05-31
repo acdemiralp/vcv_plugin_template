@@ -1,0 +1,42 @@
+diff --git a/plugin/src/plugin.cpp b/plugin/src/plugin.cpp
+index 9e249d4..4b70f57 100644
+--- a/plugin/src/plugin.cpp
++++ b/plugin/src/plugin.cpp
+@@ -9,6 +9,7 @@ void init(Plugin* p) {
+ 
+ 	// Add modules here
+ 	// p->addModel(modelMyModule);
++  p->addModel(modelModule1);
+ 
+ 	// Any other plugin initialization may go here.
+ 	// As an alternative, consider lazy-loading assets and lookup tables when your module is created to reduce startup times of Rack.
+diff --git a/plugin/src/plugin.hpp b/plugin/src/plugin.hpp
+index daaf239..f7f376a 100644
+--- a/plugin/src/plugin.hpp
++++ b/plugin/src/plugin.hpp
+@@ -9,3 +9,4 @@ extern Plugin* pluginInstance;
+ 
+ // Declare each Model, defined in each module source file
+ // extern Model* modelMyModule;
++extern Model* modelModule1;
+\ No newline at end of file
+diff --git a/sdk/plugin.mk b/sdk/plugin.mk
+index 4743841..a34b495 100644
+--- a/sdk/plugin.mk
++++ b/sdk/plugin.mk
+@@ -72,11 +72,15 @@ dist: all
+ 	@# Strip and copy plugin binary
+ 	cp $(TARGET) dist/$(SLUG)/
+ ifdef ARCH_MAC
++ifneq ($(BUILD_TYPE), Debug)
+ 	$(STRIP) -S dist/$(SLUG)/$(TARGET)
++endif
+ 	$(INSTALL_NAME_TOOL) -change libRack.dylib /tmp/Rack2/libRack.dylib dist/$(SLUG)/$(TARGET)
+ 	$(OTOOL) -L dist/$(SLUG)/$(TARGET)
+ else
++ifneq ($(BUILD_TYPE), Debug)
+ 	$(STRIP) -s dist/$(SLUG)/$(TARGET)
++endif
+ endif
+ 	@# Copy distributables
+ ifdef ARCH_MAC
